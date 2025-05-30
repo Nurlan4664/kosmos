@@ -1,36 +1,483 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Нурлан - Личный сайт</title>
     <style>
- body{
-    background-color: chartreuse;
-    color: blue;
- }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  .profile{color: brown;}
-  .hobbi{color: blueviolet;}
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
 
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        nav a:hover::before {
+            left: 0;
+        }
+
+        nav a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Секции */
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Герой секция */
+        #hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-100px, -100px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 30px rgba(255,255,255,0.8); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* О себе секция */
+        #about {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+
+        /* Хобби секция */
+        #hobbies {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hobby-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .hobby-card:hover::before {
+            animation: shine 0.6s ease;
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Медиа секция */
+        #media {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #333;
+        }
+
+        .media-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .video-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-wrapper iframe {
+            border-radius: 15px;
+        }
+
+        .cat-image {
+            max-width: 300px;
+            height: auto;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            cursor: pointer;
+        }
+
+        .cat-image:hover {
+            transform: rotate(5deg) scale(1.1);
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+        }
+
+        .wiki-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wiki-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .wiki-link:hover::before {
+            left: 100%;
+        }
+
+        .wiki-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Заголовки секций */
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            border-radius: 2px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .media-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-wrapper iframe {
+                width: 100%;
+                height: 250px;
+            }
+        }
+
+        /* Плавная прокрутка */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Анимация при скролле */
+        .scroll-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
- <h1>Привет я НУРЛАН</h1>
- <p class="profile">Я обожаю КОШЕК и смотреть в АВКВАРИУМ</p>
+    <nav>
+        <ul>
+            <li><a href="#hero">Главная</a></li>
+            <li><a href="#about">О себе</a></li>
+            <li><a href="#hobbies">Хобби</a></li>
+            <li><a href="#media">Медиа</a></li>
+        </ul>
+    </nav>
 
-<h4>ЭТО ПРО ХОББИ</h4>
-<p class="hobbi">я играю на музыкальных инструментах и хожу в зал</p>
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Привет, я НУРЛАН</h1>
+                <p class="hero-subtitle">Добро пожаловать в мой мир увлечений и интересов</p>
+            </div>
+        </div>
+    </section>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7fhrFjGwqeA?si=386krMx8BrMR4R5N" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О себе</h2>
+            <div class="about-card scroll-animation">
+                <p class="profile-text">
+                    Я обожаю КОШЕК и смотреть в АКВАРИУМ. 
+                    Эти удивительные создания приносят мне спокойствие и радость. 
+                    Наблюдение за плавными движениями рыбок и игривым поведением кошек 
+                    помогает мне расслабиться и найти вдохновение в повседневной жизни.
+                </p>
+            </div>
+        </div>
+    </section>
 
-<a target="_blank" href="https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F">ссылка на википедию</a>
+    <section id="hobbies">
+        <div class="container">
+            <h2 class="section-title">Мои хобби</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card scroll-animation">
+                    <span class="hobby-icon">🎵</span>
+                    <h3>Музыкальные инструменты</h3>
+                    <p>Играю на различных музыкальных инструментах. Музыка - это язык души, который позволяет выражать эмоции без слов.</p>
+                </div>
+                <div class="hobby-card scroll-animation">
+                    <span class="hobby-icon">💪</span>
+                    <h3>Спортзал</h3>
+                    <p>Регулярно хожу в спортзал для поддержания физической формы. Здоровое тело - основа активной и счастливой жизни.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="media">
+        <div class="container">
+            <h2 class="section-title">Медиа</h2>
+            <div class="media-container">
+                <div class="video-wrapper scroll-animation">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7fhrFjGwqeA?si=386krMx8BrMR4R5N" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="scroll-animation">
+                    <img class="cat-image" src="https://foni.papik.pro/uploads/posts/2024-10/foni-papik-pro-t5k9-p-kartinki-cat-na-prozrachnom-fone-12.png" alt="Кошка">
+                    <br>
+                    <a class="wiki-link" target="_blank" href="https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F">
+                        Посетить Википедию
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <script>
+        // Анимация при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
+        document.querySelectorAll('.scroll-animation').forEach(el => {
+            observer.observe(el);
+        });
 
-
- <img width="400" src="https://foni.papik.pro/uploads/posts/2024-10/foni-papik-pro-t5k9-p-kartinki-cat-na-prozrachnom-fone-12.png" alt="">
+        // Плавное изменение навигации при скролле
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
